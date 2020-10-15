@@ -1,16 +1,14 @@
-const mysql = require('mysql');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const reglogin = require('./routes/regloginroutes');
-const connection = require('./database/dbconnect');
+const jokesnkitsu = require('./routes/thirdpartyapis');
 
 const app = express();
 const router = express.Router();
 
-// if running server using ngrok
-const ngrok = require('ngrok');
-
+// used when running server locally using ngrok
+// const ngrok = require('ngrok');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,6 +32,12 @@ router.get('/router', function(req, res) {
 // user-reg route
 router.post('/register', reglogin.register);
 router.post('/login', reglogin.login);
+
+// 3rd party APIs
+router.get('/getJokesData', jokesnkitsu.getJokesData);
+router.get('/getKitsuData', jokesnkitsu.getKitsuData);
+
+//to include /api in my endpoints 
 app.use('/api', router);
 
 
@@ -41,17 +45,18 @@ app.get('/', (req, res) => {
     res.send('ALX-Launchpad-Server is running fine...')
 });
 
-
+// server port
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`ALX Launchpad Server listening on port ${port}...`));
 
 
-ngrok.connect({
-    proto : 'http',
-    addr : port,
-}, (err, url) => {
-    if (err) {
-        console.error('Error while connecting Ngrok',err);
-        return new Error('Ngrok Failed');
-    }
-});
+// used when running server locally using ngrok
+// ngrok.connect({
+//     proto : 'http',
+//     addr : port,
+// }, (err, url) => {
+//     if (err) {
+//         console.error('Error while connecting Ngrok',err);
+//         return new Error('Ngrok Failed');
+//     }
+// });
