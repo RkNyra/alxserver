@@ -2,11 +2,12 @@ const axios = require('axios');
 
 
 module.exports = {
+    // random jokes
     getJokesData(req, res) {
         axios
         .get('https://official-joke-api.appspot.com/jokes/ten')
         .then(response => {
-            console.log('Fetching Random Jokes: ============')
+            console.log('Fetching Random Jokes: ===============')
             res.send(response.data)
         })
         .catch(err => {
@@ -15,13 +16,14 @@ module.exports = {
         })
     },
 
+    // kitsu data 
     getKitsuData(req, res) {
         axios
         .get('https://kitsu.io/api/edge/anime', {
           "headers": {'Accept': 'application/vnd.api+json','Content-Type': 'application/vnd.api+json'}
         })
         .then(response => {
-            console.log('I AM GETTING KITSU DATA============')
+            console.log('I AM GETTING KITSU DATA===============')
             res.send(response.data)
         })
         .catch(err => {
