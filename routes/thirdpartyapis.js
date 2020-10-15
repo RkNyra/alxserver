@@ -2,6 +2,7 @@ const axios = require('axios');
 
 
 module.exports = {
+    // random jokes
     getJokesData(req, res) {
         axios
         .get('https://official-joke-api.appspot.com/jokes/ten')
@@ -15,6 +16,7 @@ module.exports = {
         })
     },
 
+    // kitsu data 
     getKitsuData(req, res) {
         axios
         .get('https://kitsu.io/api/edge/anime', {
