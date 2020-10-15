@@ -34,7 +34,10 @@ router.post('/register', reglogin.register);
 router.post('/login', reglogin.login);
 
 // 3rd party APIs
+router.get('/getJokesData', jokesnkitsu.getJokesData);
 router.get('/getKitsuData', jokesnkitsu.getKitsuData);
+
+//to include /api in my endpoints 
 app.use('/api', router);
 
 
