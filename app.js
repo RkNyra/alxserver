@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
+const auth = require('./routes/auth');
 const reglogin = require('./routes/regloginroutes');
 const jokesnkitsu = require('./routes/thirdpartyapis');
 
@@ -34,8 +36,8 @@ router.post('/register', reglogin.register);
 router.post('/login', reglogin.login);
 
 // 3rd party APIs
-router.get('/getJokesData', jokesnkitsu.getJokesData);
-router.get('/getKitsuData', jokesnkitsu.getKitsuData);
+router.get('/getJokesData', auth.required, jokesnkitsu.getJokesData);
+router.get('/getKitsuData', auth.required, jokesnkitsu.getKitsuData);
 
 //to include /api in my endpoints 
 app.use('/api', router);

@@ -1,6 +1,9 @@
 const connection = require('../database/dbconnect');
 const {v4: uuidv4} = require('uuid');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+
 
 
 exports.register = async function(req, res) {
@@ -97,6 +100,7 @@ exports.login = async function(req, res){
     let email = req.body.email;
     let password = req.body.password;
 
+    
     connection.query('SELECT * FROM alxusers WHERE email = ?',[email], async function(error, results){
         if(error){
             res.send({
@@ -108,10 +112,15 @@ exports.login = async function(req, res){
             if(results.length > 0){
                 const comparison = await bcrypt.compare(password, results[0].password)
                 if(comparison){
+                    let username = req.body.email;
+                    let user = { name: username}
+                    const accessToken = jwt.sign(user, process.env.JWT_TOKEN_KEY)
+
                     res.setHeader('Content-Type', 'application/json');
                     res.send({
                         "code":200,
                         "success":"login successful",
+                        "accessjwtToken": accessToken,
                         results             
                     })
                 }
