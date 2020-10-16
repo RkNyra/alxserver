@@ -114,7 +114,7 @@ exports.login = async function(req, res){
                 if(comparison){
                     let username = req.body.email;
                     let user = { name: username}
-                    const accessToken = jwt.sign(user, process.env.JWT_TOKEN_KEY)
+                    const accessToken = jwt.sign(user, process.env.JWT_TOKEN_KEY, {expiresIn: '172800s'})
 
                     res.setHeader('Content-Type', 'application/json');
                     res.send({
